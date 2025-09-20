@@ -1,10 +1,12 @@
 import { HeroButton } from "@/components/ui/hero-button"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { Monitor, Menu, User, LogOut } from "lucide-react"
 import { useState } from "react"
 import { useAuth } from "@/contexts/AuthContext"
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { useAgeAdaptiveStyles } from "@/hooks/useAgeAdaptiveStyles"
+import { motion } from "framer-motion"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -13,26 +15,52 @@ const Header = () => {
   const styles = useAgeAdaptiveStyles()
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <motion.header 
+      className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
+          <motion.div 
+            className="flex items-center gap-2"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-hero-gradient">
               <Monitor className="h-5 w-5 text-white" />
             </div>
-            <span className="text-xl font-bold">Learn1on1</span>
-          </div>
+            <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              TechWise Learning
+            </span>
+          </motion.div>
 
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#modules" className="text-sm font-medium hover:text-primary transition-colors">
+            <motion.a 
+              href="#modules" 
+              className="text-sm font-medium hover:text-primary transition-colors"
+              whileHover={{ scale: 1.05 }}
+            >
               Modules
-            </a>
-            <a href="#features" className="text-sm font-medium hover:text-primary transition-colors">
+            </motion.a>
+            <motion.a 
+              href="#features" 
+              className="text-sm font-medium hover:text-primary transition-colors"
+              whileHover={{ scale: 1.05 }}
+            >
               Features
-            </a>
-            <a href="#contact" className="text-sm font-medium hover:text-primary transition-colors">
+            </motion.a>
+            <motion.a 
+              href="#contact" 
+              className="text-sm font-medium hover:text-primary transition-colors"
+              whileHover={{ scale: 1.05 }}
+            >
               Contact
-            </a>
+            </motion.a>
+            
+            <ThemeToggle />
+            
             {user ? (
               <div className="flex items-center gap-2">
                 <span className={`${styles.fontSize} font-medium`}>
@@ -106,7 +134,7 @@ const Header = () => {
           </div>
         )}
       </div>
-    </header>
+    </motion.header>
   )
 }
 
